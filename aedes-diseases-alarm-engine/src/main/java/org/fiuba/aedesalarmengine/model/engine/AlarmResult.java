@@ -1,4 +1,6 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.engine;
+
+import org.fiuba.aedesalarmengine.model.disease.Disease;
 
 public class AlarmResult {
 

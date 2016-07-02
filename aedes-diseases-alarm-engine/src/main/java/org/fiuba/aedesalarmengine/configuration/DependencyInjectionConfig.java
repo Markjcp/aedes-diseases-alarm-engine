@@ -3,10 +3,10 @@ package org.fiuba.aedesalarmengine.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fiuba.aedesalarmengine.model.BooleanSymptom;
-import org.fiuba.aedesalarmengine.model.Disease;
-import org.fiuba.aedesalarmengine.model.Symptom;
-import org.fiuba.aedesalarmengine.model.ValuatedSymptom;
+import org.fiuba.aedesalarmengine.model.disease.Disease;
+import org.fiuba.aedesalarmengine.model.symptom.BooleanSymptom;
+import org.fiuba.aedesalarmengine.model.symptom.Symptom;
+import org.fiuba.aedesalarmengine.model.symptom.ValuatedSymptom;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

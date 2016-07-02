@@ -1,4 +1,4 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.disease;
 
 public class Disease {
 

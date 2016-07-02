@@ -1,11 +1,11 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.configuration;
 
 import java.util.List;
 import java.util.Map;
 
+import org.fiuba.aedesalarmengine.model.disease.Disease;
+
 public class ScoringConfiguration {
-	
-	private int totalScore;
 	
 	private List<SymptomsScoringConfiguration> symptomsScoring;
 	
@@ -13,22 +13,10 @@ public class ScoringConfiguration {
 	
 	private Map<Disease,Integer> diseasesScoring;
 	
-	public void buildConfiguration(int totalScore, List<SymptomsScoringConfiguration> symptomsScoring, List<Disease> diseases, Map<Disease,Integer> diseasesScoring){
-		this.totalScore = totalScore;
+	public void buildConfiguration( List<SymptomsScoringConfiguration> symptomsScoring, List<Disease> diseases, Map<Disease,Integer> diseasesScoring){
 		this.symptomsScoring = symptomsScoring;
 		this.diseases = diseases;
 		this.diseasesScoring = diseasesScoring;
-		int diseaseScore = 0;
-//		for (SymptomsScoringConfiguration diseaseScoringConfiguration : diseasesScoring) {
-//			diseaseScore += diseaseScoringConfiguration.computeScore();
-//			if(diseaseScore>totalScore){
-//				throw new ConfigurationException();
-//			}
-//		}
-	}
-
-	public int getTotalScore() {
-		return totalScore;
 	}
 
 	public List<SymptomsScoringConfiguration> getSymptomsScoring() {

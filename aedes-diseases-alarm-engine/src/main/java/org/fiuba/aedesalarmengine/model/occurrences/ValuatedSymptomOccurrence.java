@@ -1,4 +1,7 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.occurrences;
+
+import org.fiuba.aedesalarmengine.model.exception.ValuationOccurrenceException;
+import org.fiuba.aedesalarmengine.model.symptom.ValuatedSymptom;
 
 public class ValuatedSymptomOccurrence extends SymptomOccurrence {
 

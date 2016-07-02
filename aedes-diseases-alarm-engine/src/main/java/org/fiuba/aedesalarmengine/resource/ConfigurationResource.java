@@ -7,8 +7,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.fiuba.aedesalarmengine.model.Disease;
-import org.fiuba.aedesalarmengine.model.Symptom;
+import org.fiuba.aedesalarmengine.model.disease.Disease;
+import org.fiuba.aedesalarmengine.model.symptom.Symptom;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,6 +1,8 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.engine;
 
 import java.util.List;
+
+import org.fiuba.aedesalarmengine.model.occurrences.SymptomOccurrence;
 
 public class Case {
 

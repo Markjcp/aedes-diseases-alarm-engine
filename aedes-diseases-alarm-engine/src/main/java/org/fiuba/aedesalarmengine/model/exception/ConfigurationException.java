@@ -1,4 +1,4 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.exception;
 
 public class ConfigurationException extends RuntimeException {
 

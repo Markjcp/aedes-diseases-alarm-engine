@@ -1,9 +1,15 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.fiuba.aedesalarmengine.model.configuration.ScoringConfiguration;
+import org.fiuba.aedesalarmengine.model.configuration.SymptomsScoringConfiguration;
+import org.fiuba.aedesalarmengine.model.disease.Disease;
+import org.fiuba.aedesalarmengine.model.occurrences.SymptomOccurrence;
+import org.fiuba.aedesalarmengine.model.symptom.Symptom;
 
 public class SimpleAedesDiseasesEngine {
 	
@@ -42,7 +48,7 @@ public class SimpleAedesDiseasesEngine {
 		Disease resultDisease = null;
 		int totalScore = 0; 
 		if(!resultDiseases.isEmpty()){
-			resultDisease = resultDiseases.iterator().next();
+			resultDisease = retrieveMaxDisease(resultDiseases, calculations);
 			totalScore = calculations.get(resultDisease);
 		}
 		
@@ -58,6 +64,18 @@ public class SimpleAedesDiseasesEngine {
 		}
 		return null;
 		
+	}
+	
+	private Disease retrieveMaxDisease(List<Disease> diseases, Map<Disease, Integer> calculations){
+		int max = 0;
+		Disease maxDisease = null;
+		for (Disease disease : diseases) {
+			if(calculations.get(disease)>=max){
+				max = calculations.get(disease);
+				maxDisease = disease;
+			}
+		}
+		return maxDisease;
 	}
 
 }

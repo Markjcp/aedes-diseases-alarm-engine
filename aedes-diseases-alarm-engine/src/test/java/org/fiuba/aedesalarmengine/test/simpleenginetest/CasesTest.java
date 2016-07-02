@@ -6,18 +6,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import org.fiuba.aedesalarmengine.model.BooleanSymptom;
-import org.fiuba.aedesalarmengine.model.BooleanSymptomOccurrence;
-import org.fiuba.aedesalarmengine.model.Case;
-import org.fiuba.aedesalarmengine.model.Disease;
-import org.fiuba.aedesalarmengine.model.ScoringConfiguration;
-import org.fiuba.aedesalarmengine.model.SimpleAedesDiseasesEngine;
-import org.fiuba.aedesalarmengine.model.Symptom;
-import org.fiuba.aedesalarmengine.model.SymptomOccurrence;
-import org.fiuba.aedesalarmengine.model.SymptomsScoringConfiguration;
-import org.fiuba.aedesalarmengine.model.ValuatedSymptom;
-import org.fiuba.aedesalarmengine.model.ValuatedSymptomOccurrence;
+import org.fiuba.aedesalarmengine.model.configuration.ScoringConfiguration;
+import org.fiuba.aedesalarmengine.model.configuration.SymptomsScoringConfiguration;
+import org.fiuba.aedesalarmengine.model.disease.Disease;
+import org.fiuba.aedesalarmengine.model.engine.AlarmResult;
+import org.fiuba.aedesalarmengine.model.engine.Case;
+import org.fiuba.aedesalarmengine.model.engine.SimpleAedesDiseasesEngine;
+import org.fiuba.aedesalarmengine.model.occurrences.BooleanSymptomOccurrence;
+import org.fiuba.aedesalarmengine.model.occurrences.SymptomOccurrence;
+import org.fiuba.aedesalarmengine.model.occurrences.ValuatedSymptomOccurrence;
+import org.fiuba.aedesalarmengine.model.symptom.BooleanSymptom;
+import org.fiuba.aedesalarmengine.model.symptom.Symptom;
+import org.fiuba.aedesalarmengine.model.symptom.ValuatedSymptom;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,10 +27,12 @@ public class CasesTest {
 	
 	private SimpleAedesDiseasesEngine engine = null;
 	
+	private Logger logger = Logger.getLogger(CasesTest.class.toString());
+	
 	@Before
 	public void setup(){
 		ScoringConfiguration configuration = new ScoringConfiguration();
-		configuration.buildConfiguration(0, getDefaultSymptomsScoring(), getDefaultDiseases(), getDefaultDiseasesScoring());
+		configuration.buildConfiguration(getDefaultSymptomsScoring(), getDefaultDiseases(), getDefaultDiseasesScoring());
 		this.engine = new SimpleAedesDiseasesEngine(configuration);		
 	}
 	
@@ -37,18 +41,112 @@ public class CasesTest {
 		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();
 		occurrences.add(new ValuatedSymptomOccurrence(new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1), 2));
 		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(2l, "FIEBRE")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(4l, "ARTRALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(5l, "CEFALEA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l,"LEUCOPENIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(13l, "LINFOPEMIA")));
 		
 		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, true, false);
-		assertEquals(engine.runCase(caseToStudy).isPosibleDisease(),true);
-		assertEquals(engine.runCase(caseToStudy).getDisease().getId(),2l);
+		AlarmResult alarmResult = engine.runCase(caseToStudy);
+		logger.info("shouldDetectAlarm Final score: " + alarmResult.getTotalScoring() );
+		assertEquals(alarmResult.isPosibleDisease(),true);
+		assertEquals(alarmResult.getDisease().getId(),2l);
+	}
+	
+	@Test
+	public void shouldNotDetectAlarmByLocations(){
+		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(5l, "CEFALEA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l,"LEUCOPENIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(13l, "LINFOPEMIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(12l, "NEUTROPENIA")));
+		
+		
+		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, false, false);
+		AlarmResult alarmResult = engine.runCase(caseToStudy);
+		logger.info("shouldNotDetectAlarmByLocations Final score: " + alarmResult.getTotalScoring() );
+		assertEquals(alarmResult.isPosibleDisease(),false);		
+	}
+	
+	@Test
+	public void shouldNotDetectAlarmByScoring(){
+		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();
+		occurrences.add(new ValuatedSymptomOccurrence(new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1), 2));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(2l, "FIEBRE")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(4l, "ARTRALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(5l, "CEFALEA")));
+		
+		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, true, true);
+		AlarmResult alarmResult = engine.runCase(caseToStudy);
+		logger.info("shouldNotDetectAlarmByScoring Final score: " + alarmResult.getTotalScoring() );
+		assertEquals(alarmResult.isPosibleDisease(),false);		
+	}
+	
+	@Test
+	public void shouldDetectDengueAlarm(){
+		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(2l, "FIEBRE")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(3l, "MIALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(4l, "ARTRALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(5l, "CEFALEA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(6l, "EXANTEMA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(7l, "DIARREA Y VOMITOS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(8l, "HEMORRAGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(9l, "SHOCK")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(10l, "ICTERICIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l,"LEUCOPENIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(13l, "LINFOPEMIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(14l, "TROMBOCIPENIA")));
+		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, true, false);
+		AlarmResult alarmResult = engine.runCase(caseToStudy);
+		logger.info("shouldDetectDengueAlarm Final score: " + alarmResult.getTotalScoring() );
+		assertEquals(alarmResult.isPosibleDisease(),true);
+		assertEquals(alarmResult.getDisease().getId(),1l);
+	}
+	
+	@Test
+	public void shouldNotDetectDengueAlarmByLocation(){
+		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(2l, "FIEBRE")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(3l, "MIALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(4l, "ARTRALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(5l, "CEFALEA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(6l, "EXANTEMA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(7l, "DIARREA Y VOMITOS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(8l, "HEMORRAGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(9l, "SHOCK")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(10l, "ICTERICIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l,"LEUCOPENIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(13l, "LINFOPEMIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(14l, "TROMBOCIPENIA")));
+		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, false, false);
+		AlarmResult alarmResult = engine.runCase(caseToStudy);
+		logger.info("shouldNotDetectDengueAlarmByLocation Final score: " + alarmResult.getTotalScoring() );
+		assertEquals(alarmResult.isPosibleDisease(),false);		
+	}
+	
+	@Test
+	public void shouldDetectFiebreAmarillaAlarm(){
+		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();		
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(3l, "MIALGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(8l, "HEMORRAGIAS")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(9l, "SHOCK")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(10l, "ICTERICIA")));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l,"LEUCOPENIA")));
+		
+		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, true, false);
+		AlarmResult alarmResult = engine.runCase(caseToStudy);
+		logger.info("shouldDetectFiebreAmarillaAlarm Final score: " + alarmResult.getTotalScoring() );
+		assertEquals(alarmResult.isPosibleDisease(),true);
+		assertEquals(alarmResult.getDisease().getId(),4l);
 	}
 	
 	private Map<Disease, Integer> getDefaultDiseasesScoring(){
 		Map<Disease,Integer> result = new HashMap<Disease,Integer>();
-		result.put(new Disease(1l, "DENGUE"),10);
-		result.put(new Disease(2l, "CHIKUNGUYA"),10);
-		result.put(new Disease(3l, "ZIKA"),10);
-		result.put(new Disease(4l, "FIEBRE AMARILLA"),10);
+		result.put(new Disease(1l, "DENGUE"),20);
+		result.put(new Disease(2l, "CHIKUNGUYA"),20);
+		result.put(new Disease(3l, "ZIKA"),20);
+		result.put(new Disease(4l, "FIEBRE AMARILLA"),20);
 		return result;
 	}
 	
@@ -179,6 +277,7 @@ public class CasesTest {
 	}
 	
 	
+	@SuppressWarnings("unused")
 	private List<Symptom> getDefaultSymptom(){
 		List<Symptom> result = new ArrayList<Symptom>();
 		result.add(new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1));

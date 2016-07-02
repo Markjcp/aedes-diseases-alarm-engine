@@ -1,6 +1,9 @@
-package org.fiuba.aedesalarmengine.model;
+package org.fiuba.aedesalarmengine.model.configuration;
 
 import java.util.Map;
+
+import org.fiuba.aedesalarmengine.model.disease.Disease;
+import org.fiuba.aedesalarmengine.model.symptom.Symptom;
 
 public class SymptomsScoringConfiguration {
 
