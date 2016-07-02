@@ -1,4 +1,4 @@
-package com.javacodegeeks.drools;
+package org.fiuba.aedesalarmengine.test;
 global String topicLevel
 rule "Drools Introduction"
 when

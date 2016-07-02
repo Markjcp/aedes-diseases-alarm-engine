@@ -3,3 +3,5 @@
 *.class
 /.settings
 /build
+/.metadata
+/aedes-diseases-alarm-engine/bin
