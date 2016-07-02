@@ -25,13 +25,14 @@ public class DependencyInjectionConfig {
 		result.add(new BooleanSymptom(5l, "CEFALEA"));
 		result.add(new BooleanSymptom(6l, "EXANTEMA"));
 		result.add(new BooleanSymptom(7l, "DIARREA Y VOMITOS"));
-		result.add(new BooleanSymptom(8l, "SHOCK"));
-		result.add(new BooleanSymptom(9l, "ICTERICIA"));
-		result.add(new BooleanSymptom(10l,"LEUCOPENIA"));
-		result.add(new BooleanSymptom(11l, "NEUTROPENIA"));
-		result.add(new BooleanSymptom(12l, "LINFOPEMIA"));
-		result.add(new BooleanSymptom(13l, "TROMBOCIPENIA"));
-		result.add(new ValuatedSymptom(14l, "DURACION ENFERMEDAD", 0, 4, 1));
+		result.add(new BooleanSymptom(8l, "HEMORRAGIAS"));
+		result.add(new BooleanSymptom(9l, "SHOCK"));
+		result.add(new BooleanSymptom(10l, "ICTERICIA"));
+		result.add(new BooleanSymptom(11l,"LEUCOPENIA"));
+		result.add(new BooleanSymptom(12l, "NEUTROPENIA"));
+		result.add(new BooleanSymptom(13l, "LINFOPEMIA"));
+		result.add(new BooleanSymptom(14l, "TROMBOCIPENIA"));
+		result.add(new ValuatedSymptom(15l, "DURACION ENFERMEDAD", 0, 4, 1));
 		return result;
 	}
 	
