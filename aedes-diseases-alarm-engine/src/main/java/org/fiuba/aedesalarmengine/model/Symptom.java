@@ -1,23 +1,22 @@
 package org.fiuba.aedesalarmengine.model;
 
-public class Disease {
-
+public abstract class Symptom {
+	
+	private String name;
+	
 	private long id;
 
-	private String name;
-
-	public Disease(long id, String name) {
+	public Symptom(long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public long getId() {
+		return id;
+	}	
 }
