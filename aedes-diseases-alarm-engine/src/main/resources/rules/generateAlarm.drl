@@ -1,0 +1,7 @@
+package org.fiuba.aedesalarmengine.model.engine;
+rule "Alarm generation"
+when
+$alarmResult : AlarmResult( disease!= null && (caseToEvaluate.isLivesInRiskyArea() || caseToEvaluate.isVisitedRiskyArea()) )
+then
+$alarmResult.setPosibleDisease(true);
+end

@@ -11,6 +11,8 @@ import org.fiuba.aedesalarmengine.model.disease.Disease;
 import org.fiuba.aedesalarmengine.model.exception.ConfigurationException;
 import org.fiuba.aedesalarmengine.model.occurrences.SymptomOccurrence;
 import org.fiuba.aedesalarmengine.model.symptom.Symptom;
+import org.fiuba.aedesalarmengine.rule.DroolsUtil;
+import org.kie.api.runtime.KieSession;
 
 public class SimpleAedesDiseasesEngine {
 	
@@ -29,6 +31,7 @@ public class SimpleAedesDiseasesEngine {
 		Map<Disease, Integer> scoringAlarm = configuration.getDiseasesScoring();
 		Map<Disease, Integer> calculations = new HashMap<Disease, Integer>();
 		List<List<SymptomOccurrence>> classifiedOccurrences = orderOccurrences(occurrences, configuration.getOccurrencesRoundsQuantity());
+		KieSession kieSession = DroolsUtil.getInstance().getkSession();
 		
 		for (List<SymptomOccurrence> occurrenceGroup : classifiedOccurrences) {
 			evaluateOccurrences(occurrenceGroup, configs, diseases, calculations);
@@ -39,12 +42,17 @@ public class SimpleAedesDiseasesEngine {
 			Disease resultDisease = diagnoseDisease(resultDiseases, calculations);
 			if(resultDisease != null){
 				totalScore = calculations.get(resultDisease);			
-				boolean diseaseAlert = evaluateLocation(caseToStudy, resultDiseases);
-				AlarmResult result = new AlarmResult(diseaseAlert, resultDisease, totalScore);
+				//boolean diseaseAlert = evaluateLocation(caseToStudy, resultDiseases);
+				//AlarmResult result = new AlarmResult(diseaseAlert, resultDisease, totalScore);
+				AlarmResult result = new AlarmResult(resultDisease,caseToStudy,totalScore);
+				kieSession.insert(result);
+				kieSession.fireAllRules();
 				return result;
 			}			
 		}
-		AlarmResult result = new AlarmResult(false, null, 0);
+		AlarmResult result = new AlarmResult(caseToStudy);
+		kieSession.insert(result);
+		kieSession.fireAllRules();
 		return result;
 	}
 
@@ -71,10 +79,6 @@ public class SimpleAedesDiseasesEngine {
 			resultDisease = retrieveMaxDisease(resultDiseases, calculations);
 		}
 		return resultDisease;
-	}
-
-	private boolean evaluateLocation(Case caseToStudy, List<Disease> resultDiseases) {
-		return !resultDiseases.isEmpty() && (caseToStudy.isLivesInRiskyArea() || caseToStudy.isVisitedRiskyArea());
 	}
 
 	private void computeTotals(List<Disease> resultDiseases, Map<Disease, Integer> scoringAlarm,

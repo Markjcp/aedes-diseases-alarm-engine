@@ -10,10 +10,18 @@ public class AlarmResult {
 
 	private int totalScoring;
 
-	public AlarmResult(boolean posibleDisease, Disease disease, int totalScoring) {
+	private Case caseToEvaluate;
+	
+	public AlarmResult(Case caseToEvaluate){
+		this.totalScoring = 0;
+		this.posibleDisease = false;
+		this.caseToEvaluate = caseToEvaluate;
+	}	
+
+	public AlarmResult(Disease disease, Case caseToEvaluate, int totalScoring) {
 		super();
-		this.posibleDisease = posibleDisease;
 		this.disease = disease;
+		this.caseToEvaluate = caseToEvaluate;
 		this.totalScoring = totalScoring;
 	}
 
@@ -21,12 +29,32 @@ public class AlarmResult {
 		return posibleDisease;
 	}
 
+	public void setPosibleDisease(boolean posibleDisease) {
+		this.posibleDisease = posibleDisease;
+	}
+
 	public Disease getDisease() {
 		return disease;
 	}
 
+	public void setDisease(Disease disease) {
+		this.disease = disease;
+	}
+
 	public int getTotalScoring() {
 		return totalScoring;
+	}
+
+	public void setTotalScoring(int totalScoring) {
+		this.totalScoring = totalScoring;
+	}
+
+	public Case getCaseToEvaluate() {
+		return caseToEvaluate;
+	}
+
+	public void setCaseToEvaluate(Case caseToEvaluate) {
+		this.caseToEvaluate = caseToEvaluate;
 	}
 
 }
