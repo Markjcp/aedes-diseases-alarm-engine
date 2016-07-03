@@ -11,6 +11,10 @@ public class ValuatedSymptom extends Symptom {
 	private int maxvaluation;
 
 	private int step;
+	
+	public ValuatedSymptom(){
+		super();
+	}
 
 	public ValuatedSymptom(long id, String valuatedSymptomName, int minvaluation, int maxvaluation, int step) {
 		super(id, SYMPTOM_NAME);

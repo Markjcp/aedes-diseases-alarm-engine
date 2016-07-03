@@ -6,6 +6,10 @@ import org.fiuba.aedesalarmengine.model.symptom.ValuatedSymptom;
 public class ValuatedSymptomOccurrence extends SymptomOccurrence {
 
 	private int valuation;
+	
+	public ValuatedSymptomOccurrence(){
+		super();
+	}
 
 	public ValuatedSymptomOccurrence(ValuatedSymptom symptom, int valuation) {
 		super(symptom);
