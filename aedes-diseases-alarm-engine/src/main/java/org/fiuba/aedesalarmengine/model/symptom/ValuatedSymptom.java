@@ -16,8 +16,8 @@ public class ValuatedSymptom extends Symptom {
 		super();
 	}
 
-	public ValuatedSymptom(long id, String valuatedSymptomName, int minvaluation, int maxvaluation, int step) {
-		super(id, SYMPTOM_NAME);
+	public ValuatedSymptom(long id, String valuatedSymptomName, int minvaluation, int maxvaluation, int step, int order) {
+		super(id, SYMPTOM_NAME,order);
 		this.valuatedSymptomName = valuatedSymptomName;
 		this.minvaluation = minvaluation;
 		this.maxvaluation = maxvaluation;

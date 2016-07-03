@@ -13,10 +13,13 @@ public class ScoringConfiguration {
 	
 	private Map<Disease,Integer> diseasesScoring;
 	
-	public void buildConfiguration( List<SymptomsScoringConfiguration> symptomsScoring, List<Disease> diseases, Map<Disease,Integer> diseasesScoring){
+	private int occurrencesRoundsQuantity;
+	
+	public void buildConfiguration( List<SymptomsScoringConfiguration> symptomsScoring, List<Disease> diseases, Map<Disease,Integer> diseasesScoring, int occurrencesRoundsQuantity){
 		this.symptomsScoring = symptomsScoring;
 		this.diseases = diseases;
 		this.diseasesScoring = diseasesScoring;
+		this.occurrencesRoundsQuantity = occurrencesRoundsQuantity;
 	}
 
 	public List<SymptomsScoringConfiguration> getSymptomsScoring() {
@@ -30,9 +33,8 @@ public class ScoringConfiguration {
 	public Map<Disease, Integer> getDiseasesScoring() {
 		return diseasesScoring;
 	}
-	
-	
-	
-	
 
+	public int getOccurrencesRoundsQuantity() {
+		return occurrencesRoundsQuantity;
+	}
 }

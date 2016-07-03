@@ -10,8 +10,8 @@ public class BooleanSymptom extends Symptom {
 		super();
 	}
 
-	public BooleanSymptom(Long id, String symptomName) {
-		super(id, SYMPTOM_NAME);
+	public BooleanSymptom(Long id, String symptomName, int order) {
+		super(id, SYMPTOM_NAME,order);
 		this.symptomName = symptomName;
 	}
 

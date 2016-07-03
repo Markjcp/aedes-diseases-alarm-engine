@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 import org.fiuba.aedesalarmengine.model.configuration.ScoringConfiguration;
 import org.fiuba.aedesalarmengine.model.configuration.SymptomsScoringConfiguration;
 import org.fiuba.aedesalarmengine.model.disease.Disease;
-import org.fiuba.aedesalarmengine.model.engine.Case;
 import org.fiuba.aedesalarmengine.model.symptom.Symptom;
 import org.springframework.stereotype.Component;
 

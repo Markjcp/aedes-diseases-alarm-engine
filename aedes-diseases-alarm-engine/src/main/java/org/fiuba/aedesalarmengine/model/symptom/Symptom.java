@@ -14,14 +14,17 @@ public abstract class Symptom {
 	
 	private long id;
 	
+	private int order;
+	
 	public Symptom(){
 		super();
 	}
 
-	public Symptom(long id, String name) {
+	public Symptom(long id, String name, int order) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.order = order;
 	}
 
 	public String getName() {
@@ -30,5 +33,13 @@ public abstract class Symptom {
 
 	public long getId() {
 		return id;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}	
 }

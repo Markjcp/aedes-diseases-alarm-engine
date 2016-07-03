@@ -25,21 +25,21 @@ public class DependencyInjectionConfig {
 	@Bean(name = "defaultSymptom")
 	public List<Symptom> getDefaultSymptom() {
 		List<Symptom> result = new ArrayList<Symptom>();
-		result.add(new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1));
-		result.add(new BooleanSymptom(2l, "FIEBRE"));
-		result.add(new BooleanSymptom(3l, "MIALGIAS"));
-		result.add(new BooleanSymptom(4l, "ARTRALGIAS"));
-		result.add(new BooleanSymptom(5l, "CEFALEA"));
-		result.add(new BooleanSymptom(6l, "EXANTEMA"));
-		result.add(new BooleanSymptom(7l, "DIARREA Y VOMITOS"));
-		result.add(new BooleanSymptom(8l, "HEMORRAGIAS"));
-		result.add(new BooleanSymptom(9l, "SHOCK"));
-		result.add(new BooleanSymptom(10l, "ICTERICIA"));
-		result.add(new BooleanSymptom(11l, "LEUCOPENIA"));
-		result.add(new BooleanSymptom(12l, "NEUTROPENIA"));
-		result.add(new BooleanSymptom(13l, "LINFOPEMIA"));
-		result.add(new BooleanSymptom(14l, "TROMBOCIPENIA"));
-		result.add(new ValuatedSymptom(15l, "DURACION ENFERMEDAD", 0, 4, 1));
+		result.add(new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1,1));
+		result.add(new BooleanSymptom(2l, "FIEBRE",0));
+		result.add(new BooleanSymptom(3l, "MIALGIAS",0));
+		result.add(new BooleanSymptom(4l, "ARTRALGIAS",0));
+		result.add(new BooleanSymptom(5l, "CEFALEA",0));
+		result.add(new BooleanSymptom(6l, "EXANTEMA",0));
+		result.add(new BooleanSymptom(7l, "DIARREA Y VOMITOS",1));
+		result.add(new BooleanSymptom(8l, "HEMORRAGIAS",1));
+		result.add(new BooleanSymptom(9l, "SHOCK",1));
+		result.add(new BooleanSymptom(10l, "ICTERICIA",1));
+		result.add(new BooleanSymptom(11l, "LEUCOPENIA",1));
+		result.add(new BooleanSymptom(12l, "NEUTROPENIA",1));
+		result.add(new BooleanSymptom(13l, "LINFOPEMIA",1));
+		result.add(new BooleanSymptom(14l, "TROMBOCIPENIA",1));
+		result.add(new ValuatedSymptom(15l, "DURACION ENFERMEDAD", 0, 4, 1,1));
 		return result;
 	}
 
@@ -57,7 +57,7 @@ public class DependencyInjectionConfig {
 	public ScoringConfiguration getDefaultConfiguration() {
 		ScoringConfiguration configuration = new ScoringConfiguration();
 		configuration.buildConfiguration(getDefaultSymptomsScoring(), getDefaultDiseases(),
-				getDefaultDiseasesScoring());
+				getDefaultDiseasesScoring(),2);
 		return configuration;
 	}
 
@@ -81,7 +81,7 @@ public class DependencyInjectionConfig {
 		symptomConfig1Valuations.put(new Disease(3l, "ZIKA"), 3);
 		symptomConfig1Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 2);
 		SymptomsScoringConfiguration symptomConfig1 = new SymptomsScoringConfiguration(
-				new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1), symptomConfig1Valuations);
+				new ValuatedSymptom(1l, "INCUBACION", 0, 4, 1,1), symptomConfig1Valuations);
 		result.add(symptomConfig1);
 
 		Map<Disease, Integer> symptomConfig2Valuations = new HashMap<Disease, Integer>();
@@ -89,7 +89,7 @@ public class DependencyInjectionConfig {
 		symptomConfig2Valuations.put(new Disease(2l, "CHIKUNGUYA"), 5);
 		symptomConfig2Valuations.put(new Disease(3l, "ZIKA"), 4);
 		symptomConfig2Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 4);
-		SymptomsScoringConfiguration symptomConfig2 = new SymptomsScoringConfiguration(new BooleanSymptom(2l, "FIEBRE"),
+		SymptomsScoringConfiguration symptomConfig2 = new SymptomsScoringConfiguration(new BooleanSymptom(2l, "FIEBRE",0),
 				symptomConfig2Valuations);
 		result.add(symptomConfig2);
 
@@ -99,7 +99,7 @@ public class DependencyInjectionConfig {
 		symptomConfig3Valuations.put(new Disease(3l, "ZIKA"), 4);
 		symptomConfig3Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 4);
 		SymptomsScoringConfiguration symptomConfig3 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(3l, "MIALGIAS"), symptomConfig3Valuations);
+				new BooleanSymptom(3l, "MIALGIAS",0), symptomConfig3Valuations);
 		result.add(symptomConfig3);
 
 		Map<Disease, Integer> symptomConfig4Valuations = new HashMap<Disease, Integer>();
@@ -108,7 +108,7 @@ public class DependencyInjectionConfig {
 		symptomConfig4Valuations.put(new Disease(3l, "ZIKA"), 4);
 		symptomConfig4Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 3);
 		SymptomsScoringConfiguration symptomConfig4 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(4l, "ARTRALGIAS"), symptomConfig4Valuations);
+				new BooleanSymptom(4l, "ARTRALGIAS",0), symptomConfig4Valuations);
 		result.add(symptomConfig4);
 
 		Map<Disease, Integer> symptomConfig5Valuations = new HashMap<Disease, Integer>();
@@ -117,7 +117,7 @@ public class DependencyInjectionConfig {
 		symptomConfig5Valuations.put(new Disease(3l, "ZIKA"), 3);
 		symptomConfig5Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 2);
 		SymptomsScoringConfiguration symptomConfig5 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(5l, "CEFALEA"), symptomConfig5Valuations);
+				new BooleanSymptom(5l, "CEFALEA",0), symptomConfig5Valuations);
 		result.add(symptomConfig5);
 
 		Map<Disease, Integer> symptomConfig6Valuations = new HashMap<Disease, Integer>();
@@ -126,7 +126,7 @@ public class DependencyInjectionConfig {
 		symptomConfig6Valuations.put(new Disease(3l, "ZIKA"), 5);
 		symptomConfig6Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 1);
 		SymptomsScoringConfiguration symptomConfig6 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(6l, "EXANTEMA"), symptomConfig6Valuations);
+				new BooleanSymptom(6l, "EXANTEMA",0), symptomConfig6Valuations);
 		result.add(symptomConfig6);
 
 		Map<Disease, Integer> symptomConfig7Valuations = new HashMap<Disease, Integer>();
@@ -135,7 +135,7 @@ public class DependencyInjectionConfig {
 		symptomConfig7Valuations.put(new Disease(3l, "ZIKA"), 3);
 		symptomConfig7Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 2);
 		SymptomsScoringConfiguration symptomConfig7 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(7l, "DIARREA Y VOMITOS"), symptomConfig7Valuations);
+				new BooleanSymptom(7l, "DIARREA Y VOMITOS",1), symptomConfig7Valuations);
 		result.add(symptomConfig7);
 
 		Map<Disease, Integer> symptomConfig8Valuations = new HashMap<Disease, Integer>();
@@ -144,7 +144,7 @@ public class DependencyInjectionConfig {
 		symptomConfig8Valuations.put(new Disease(3l, "ZIKA"), 1);
 		symptomConfig8Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 4);
 		SymptomsScoringConfiguration symptomConfig8 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(8l, "HEMORRAGIAS"), symptomConfig8Valuations);
+				new BooleanSymptom(8l, "HEMORRAGIAS",1), symptomConfig8Valuations);
 		result.add(symptomConfig8);
 
 		Map<Disease, Integer> symptomConfig9Valuations = new HashMap<Disease, Integer>();
@@ -152,7 +152,7 @@ public class DependencyInjectionConfig {
 		symptomConfig9Valuations.put(new Disease(2l, "CHIKUNGUYA"), 1);
 		symptomConfig9Valuations.put(new Disease(3l, "ZIKA"), 1);
 		symptomConfig9Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 4);
-		SymptomsScoringConfiguration symptomConfig9 = new SymptomsScoringConfiguration(new BooleanSymptom(9l, "SHOCK"),
+		SymptomsScoringConfiguration symptomConfig9 = new SymptomsScoringConfiguration(new BooleanSymptom(9l, "SHOCK",1),
 				symptomConfig9Valuations);
 		result.add(symptomConfig9);
 
@@ -162,7 +162,7 @@ public class DependencyInjectionConfig {
 		symptomConfig10Valuations.put(new Disease(3l, "ZIKA"), 1);
 		symptomConfig10Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 5);
 		SymptomsScoringConfiguration symptomConfig10 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(10l, "ICTERICIA"), symptomConfig10Valuations);
+				new BooleanSymptom(10l, "ICTERICIA",1), symptomConfig10Valuations);
 		result.add(symptomConfig10);
 
 		Map<Disease, Integer> symptomConfig11Valuations = new HashMap<Disease, Integer>();
@@ -171,7 +171,7 @@ public class DependencyInjectionConfig {
 		symptomConfig11Valuations.put(new Disease(3l, "ZIKA"), 2);
 		symptomConfig11Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 4);
 		SymptomsScoringConfiguration symptomConfig11 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(11l, "LEUCOPENIA"), symptomConfig11Valuations);
+				new BooleanSymptom(11l, "LEUCOPENIA",1), symptomConfig11Valuations);
 		result.add(symptomConfig11);
 
 		Map<Disease, Integer> symptomConfig12Valuations = new HashMap<Disease, Integer>();
@@ -180,7 +180,7 @@ public class DependencyInjectionConfig {
 		symptomConfig12Valuations.put(new Disease(3l, "ZIKA"), 2);
 		symptomConfig12Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 2);
 		SymptomsScoringConfiguration symptomConfig12 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(12l, "NEUTROPENIA"), symptomConfig12Valuations);
+				new BooleanSymptom(12l, "NEUTROPENIA",1), symptomConfig12Valuations);
 		result.add(symptomConfig12);
 
 		Map<Disease, Integer> symptomConfig13Valuations = new HashMap<Disease, Integer>();
@@ -189,7 +189,7 @@ public class DependencyInjectionConfig {
 		symptomConfig13Valuations.put(new Disease(3l, "ZIKA"), 2);
 		symptomConfig13Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 4);
 		SymptomsScoringConfiguration symptomConfig13 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(13l, "LINFOPEMIA"), symptomConfig13Valuations);
+				new BooleanSymptom(13l, "LINFOPEMIA",1), symptomConfig13Valuations);
 		result.add(symptomConfig13);
 
 		Map<Disease, Integer> symptomConfig14Valuations = new HashMap<Disease, Integer>();
@@ -198,7 +198,7 @@ public class DependencyInjectionConfig {
 		symptomConfig14Valuations.put(new Disease(3l, "ZIKA"), 2);
 		symptomConfig14Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 2);
 		SymptomsScoringConfiguration symptomConfig14 = new SymptomsScoringConfiguration(
-				new BooleanSymptom(14l, "TROMBOCIPENIA"), symptomConfig14Valuations);
+				new BooleanSymptom(14l, "TROMBOCIPENIA",1), symptomConfig14Valuations);
 		result.add(symptomConfig14);
 
 		Map<Disease, Integer> symptomConfig15Valuations = new HashMap<Disease, Integer>();
@@ -207,7 +207,7 @@ public class DependencyInjectionConfig {
 		symptomConfig15Valuations.put(new Disease(3l, "ZIKA"), 3);
 		symptomConfig15Valuations.put(new Disease(4l, "FIEBRE AMARILLA"), 2);
 		SymptomsScoringConfiguration symptomConfig15 = new SymptomsScoringConfiguration(
-				new ValuatedSymptom(15l, "DURACION ENFERMEDAD", 0, 4, 1), symptomConfig15Valuations);
+				new ValuatedSymptom(15l, "DURACION ENFERMEDAD", 0, 4, 1,1), symptomConfig15Valuations);
 		result.add(symptomConfig15);
 
 		return result;
@@ -215,13 +215,13 @@ public class DependencyInjectionConfig {
 
 	@Bean(name = "caseExample")
 	public Case getCaseExample() {
-		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();
-		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(3l, "MIALGIAS")));
-		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(8l, "HEMORRAGIAS")));
-		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(9l, "SHOCK")));
-		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(10l, "ICTERICIA")));
-		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l, "LEUCOPENIA")));
-
+		List<SymptomOccurrence> occurrences = new ArrayList<SymptomOccurrence>();		
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(3l, "MIALGIAS",0)));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(8l, "HEMORRAGIAS",1)));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(9l, "SHOCK",1)));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(10l, "ICTERICIA",1)));
+		occurrences.add(new BooleanSymptomOccurrence(new BooleanSymptom(11l,"LEUCOPENIA",1)));
+		
 		Case caseToStudy = new Case(1l, "MARCOS", "FORLENZA", "33438259", occurrences, true, false);
 		return caseToStudy;
 	}
